@@ -1,0 +1,372 @@
+%*****************************************************************************************
+%*********************************** First Chapter ***************************************
+%*****************************************************************************************
+
+\chapter{Datentypen und Zahlensysteme}  %Title of the First Chapter
+
+\ifpdf
+    \graphicspath{{Chapter1/Figs/Raster/}{Chapter1/Figs/PDF/}{Chapter1/Figs/}}
+\else
+    \graphicspath{{Chapter1/Figs/Vector/}{Chapter1/Figs/}}
+\fi
+
+
+%********************************** %First Section  **************************************
+\section{Einführung} %Section - 1.1 
+
+Am Anfang dieses Skriptes stehen die verschiedenen Datentypen, die es in Java (und vielen anderen Programmiersprachen) gibt. Auch werden wir uns angucken, was Dual-, Dezimal und Hexadezimalzahlen sind und wie man diese ineinander umrechnen kann. Außerdem wird noch beleuchtet, wie Java negative Zahlen im Speicher repräsentiert und was es mit der \textit{IEEE 754-Norm} auf sich hat.
+
+
+\section{Datentypen}
+
+
+Wenn man in Java programmiert, werden Konstanten und andere Werte in Variablen gespeichert, sodass man diese Werte später besser referenzieren kann. Diese Konstanten bezeichnet man heutzutage als \texttt{Literal}. Der \texttt{Datentyp} hingegen ist der Typ der Variable. Auf die Unterschiede dieser Datentypen gehen wir nun genauer ein. Am Ende der Ausführungen findet sich eine tabellarische Übersicht über die verschiedenen Datentypen, deren Literale und wie viel Platz diese im Speicher belegen.
+
+\subsection{Bool'sche-Literale}
+
+Es ist ein elementarer Bestandteil einer Programmiersprache, zu gucken, ob eine Aussage wahr oder falsch ist. Hierzu gibt es in Java den bool'schen Datentyp \texttt{Boolean}, der lediglich die Werte \textit{true} und \textit{false} annehmen kann. Anders als man das eventuell aus C++ kennt, existiert keine numerische Entsprechung, man kann also nicht false mit 0 gleichsetzen, oder irgendeinem anderen Wert.
+
+\subsection{Integer-Literale}
+
+Wenn man ganze Zahlen darstellen möchte, nutzt man hierzu für gewöhnlich das \texttt{Integer} Literal. Dieses kann Werte von etwa -2.000.000.000 (Milliarde) bis 2.000.000.000 darstellen. Genaueres kann man der Tabelle weiter unten entnehmen, welche die Wertebereiche und Größe etwas genauer darstellt. In Java kann man auch Integer-Literale dazu benutzen um Oktal-, oder Hexadezimalzahlen darzustellen. Im späteren wird darauf eingegangen, was das für Zahlen sind und wie man diese umrechnet. Für gewöhnlich reichen Integer Literale aus, um ganze Zahlen darzustellen. Für den Fall, dass der Platz nicht ausreicht, kann man auch auf das Long Literal zurückgreifen.
+
+\subsection{Long-Literal}
+
+Das \textbf{Long} Literal kann genau so wie das Integer Literal für ganze Zahlen benutzt werden, jedoch kann man im Long Literal größere Zahlen speichern, da dieses anstatt der 32 Bit, 64 Bit im Speicher einnimmt. Es wird aber dazu geraten, wenn nicht unbedingt nötig, ganze Zahlen als Integer zu speichern. Eine Besonderheit der Long Literale ist, dass diese ein \textit{L}, oder \textit{l} als Suffix haben. Möchte ich also den Wert $12$ als Long Variable speichern, so schreibe ich \texttt{long variablenName = 12L}.
+
+\subsection{Gleitkomma-Literale}
+
+Es gibt zwei Möglichkeiten, Gleitkommazahlen darzustellen. Die normale Schreibweise und die wissenschaftliche. Die normale Schreibweie besteht aus einer ganzen Zahl, welche durch einen \textit{.} von dem Bruchteil getrennt wird, bsp. $42.24$, $3.1415$. \underline{Wichtig}: Man benutzt nach amerikanischem Vorbild einen Punkt und kein Komma. 
+
+Die wisenschaftliche Schreibweise, welche man im englischen auch als \textit{Exponential Notation} bezeichnet, bildet man, indem man eine Gleitkommazahl schreibt und an diese ein \textit{e}, oder \textit{E} anhängt, welches die Zehnerpotenz angibt. Man kennt e ja auch als Basis des natürlichen Logarithmus, das ist hier \textit{nicht} der Fall, in Java beschreibt \textit{E} einen Exponenten zur Basis 10. Mit dieser Schreibweise kann man sehr große, oder sehr kleine Zahlen sehr schön darstellen. Möchte ich nun $876.000.000$ darstellen, so kann ich auch $8.76E8$ schreiben. Aber auch $0.0000000987$ lässt sich schöner als $9.87E-8$ darstellen.
+
+Es gibt in Java zwei Datentypen, die man verwenden kann. Zum einen das \texttt{Float} Literal, welches 32 Bit groß ist, als auch das \texttt{Double} Literal (64 Bit). Um das Float Literal zu nutzen, schreiben wir die Gleitkommazahl, wie gerade beschrieben, und hängen als Suffix ein \textit{F}, oder \textit{f} an. Somit kann man dann $42.24F$ (normale Schreibweise), oder aber $4.224E1f$ (wissenschaftliche Schreibweise) schreiben.
+
+Wenn man das Suffix nicht an die Gleitkommazahl anhängt, konvertiert Java diese automatisch in ein Literal vom Typ \texttt{Double}, da dieses ohne Suffix auskommt. Somit sind die Zahlen $42.24$ und $4.224E1$ vom Typ Double. Wir benutzen in der Regel Literale vom Typ Double.
+
+\subsection{Zeichen-Literale}
+
+Möchte man ein einzelnen Zeichen speichern, so setzt man dieses in einfache Anführungszeichen, welches man als \texttt{Char} Literal bezeichet. Solche Zeichen können beispielsweise \textit{'§'}, \textit{'z'}, oder \textit{'T'} sein. Leider kann man über diese Methode nicht alle Zeichen angeben, da manche Zeichen eine besondere Funktion haben. \textit{'\textbackslash n'} ist zum Beispiel ein Symbol, welches eine Neue Zeile ausgibt, \textit{'\textbackslash t'} einen Tabulator. Und wenn man nun den Backslash in einem Zeichen Literal speichern möchte, hat man das Problem, dass dieses ja für die eben genannten Sonderzeichen benutzt. Deswegen ist für gewisse Zeichen eine sog. Escape-Sequenz nötig. \textit{'\textbackslash \textbackslash'} speichert also den Wert \textit{'\textbackslash'}.
+
+Es ist zudem möglich, mit dem Escapezeichen \textit{\textbackslash} beliebige Zeichen des Unicode Zeichensatzes darzustellen, indem man eine besondere Schreibweise benutzt. \textit{'\textbackslash u0092'} steht für den Buchstaben \textit{e}.
+
+\subsection{String-Literale}
+
+String Literale werden anders als die Zeichen-Literale mit doppelten Anführungszeichen angegeben und können mehrere Zeichen beinhalten. Dies ist sinnvoll, wenn man eine Nachricht ausgeben möchte, den Namen eine Person speichern möchte, oder alles, was sonst mit Text zu tun hat. Auch hier kann man Zeilenumbrüche durch ein \textit{\textbackslash n} hervorrufen, als Beispiel soll die Floskel \textit{"Hallo \textbackslash n Welt"} dienen.
+Es ist wichtig, vor allem wenn man das Thema Heap und Stack betrachtet, dass Strings keine primitiven Datentypen sind, sondern intern auch wie Objekte behandelt werden. Somit kann man auch auf den Strings Methoden aufrufen. Jedoch folgen Strings nicht der üblichen Syntax, die benutzt wird um Objekte zu initalisieren. Einen String initialisiert man wie folgt.
+
+\begin{lstlisting}
+String helloWorld = "Hello World";
+\end{lstlisting}
+
+\subsection{Zusammenfassung}
+
+Wie man sieht, gibt es viele unterschiedliche Datentypen. Es handelt sich bei den hier behandelten Datentypen um sog. \textbf{primitive Datentypen} (\texttt{Strings} sind hier, wie gerade besprochen ausgenommen). Das bedeutet, dass diese nur einen gewissen Wertebereich aufnehmen können. Sie besitzen eine festgelegte Anzahl von Werten, was auch als \textit{Diskretheit} bezeichnet wird, aber auch eine feste Ober- und Untergrenze, wie man in der Tabelle $1.1$ erkennen kann. 
+
+Außerdem ist es wichtig, dass man sich den begrenzten Speicherplatz bewusst macht. Das ist der Grund dafür, dass man reele Zahlen lediglich als gerundete Gleitkommazahl darstellen kann, worunter die Genauigkeit dann entsprechend leidet.
+
+\begin{table}[ht] 
+\caption{Die verschiedenen Datentypen in Java} 
+\centering 
+\begin{tabular}{l r r r r} 
+\hline\hline 
+Name & kleinster Wert & größter Wert & Größe in Bit & Literale\\ [0.5ex]  
+\hline 
+byte & -128 & 127 & 8 & 12\\
+short & -32.768 & 32767 & 16 & 12\\
+int & -2.147.483.648 & 2.147.483.647 & 32 & 12\\
+long & $-9.2E^{18}$ & $9.2E^{18}$ & 64 & 12L\\
+char & \textbackslash u0000 & \textbackslash uFFFF & 16 (Unicode) & 'a'\\
+boolean & true, false & & 1 & true, false\\
+float & $-1.4E^{45}$  & $3.4E^{38}$ & 32 (IEEE 754) & 1.2F\\
+double & $-4.9E^{324}$ & $1.7E^{308}$ & 64 (IEEE 754) & 1.2\\
+\hline 
+\end{tabular} 
+\label{table:nonlin} 
+\end{table}
+
+
+%********************************** 
+%Zahlensysteme  
+%**********************************
+
+
+\section{Zahlensysteme} 
+
+Die uns bekannten Zahlen sind die Dezimalzahlen und wie man an dem Teilwort {\em Dezi} erkennt, haben diese die Basis 10. Man kann die Zahl 53 also wie folgt darstellen 
+
+
+$$53_{10} = 5 \cdot 10^{1} + 3 \cdot 10^{0}$$
+
+Man kann aber nicht nur die natürlichen Zahlen darstellen, sondern auch Nachkommestellen und negative Zahlen sind möglich. Für die Nachkommastellen nimmt man einen negativen Exponenten, für negative Zahlen wird für gewöhnlich ein Vorzeichenbit gesetzt, das werden wir im späteren Verlauf kennen lernen. Gucken wir uns zunächst an, wie man Nachkommastellen bestimmen kann.
+
+$$17,53_{10} = 1 \cdot 10^{1} + 7 \cdot 10^{0} + 5 \cdot 10^{-1} + 3 \cdot 10^{-2}$$
+
+Jetzt möchten wir aber einen Schritt weiter gehen und eine Binärzahl, also eine Zahl mit der Basis 2, in eine Dezimalzahl (Basis 10) umwandeln.
+
+\begin{eqnarray}
+1101_{2} & = & 1 \cdot 2^{3} + 1 \cdot 2^{2} + 0 \cdot 2^{1} + 1 \cdot 2^{0} \\
+& = & 1 \cdot 8 + 1 \cdot 4 + 0 \cdot 2 + 1 \cdot 1 \\
+& = & 13_{10}
+\end{eqnarray}
+
+Nach diesem Vorbild kann man Zahlen auch im Oktalsystem (Basis 8) und Hexadezimalsystem (Basis 16) darstellen.
+
+\begin{eqnarray}
+275_{8} & = & 2 \cdot 8^{2} + 7 \cdot 8^{1} + 5 \cdot 8^{0} \\
+& = & 128 + 56 + 5 \\
+& = & 189_{10}
+\end{eqnarray}
+\begin{eqnarray}
+10F_{16} & = & 1 \cdot 16^{2} + 0 \cdot 16^{1} + 15 \cdot 16^{0} \\
+& = & 256 + 0 + 15 \\ 
+& = & 271_{10}
+\end{eqnarray}
+
+\subsection{Dezimalzahlen}
+
+\begin{itemize}
+\item Folge der Ziffern 0 bis 9
+\item keine führende 0
+\item Vorzeichen möglich
+\end{itemize}
+
+Beispiel: 234, -23, 0 usw.
+
+\subsection{Hexadezimalzahlen}
+
+\begin{itemize}
+\item Folge von 0 bis F (F$_{16} = 15_{10}$)
+\end{itemize}
+
+Beispiel: 011F, FFFA
+
+\subsection{Oktalzahlen}
+
+\begin{itemize}
+\item Beginnen immer mit einer 0
+\item Folge von 0 bis 7
+\end{itemize}
+
+Beispiel: 0118, 0881
+
+\subsection{Umrechnung vom Dezimalsystem in Basis $b$}
+
+Man kann vom Dezimalsystem sehr einfach in ein anderes Zahlensystem umwandeln, indem man eine Dezimalzahl ganzzahlig durch b teilt. Der Rest gibt dann den Wert im Zielsystem an. Diesen Schritt wiederholt man so oft, bis der ganzzahlige Anteil 0 übrig bleibt. Folgendes Beispiel gibt Auffschluss über diese Rechnung:
+
+Basis $b = 8$
+\begin{eqnarray}
+97_{10} = 97 : 8 & = & \quad\text{12 Rest 1}\\
+12 : 8 & = & \quad\text{1 Rest 4}\\
+1 : 8 & = & \quad\text{0 Rest 1}
+\end{eqnarray}
+
+Ergebnis: $97_{10} = 141_{8}$
+
+Das Ergebnis besteht aus den Restteilen, von unten nach oben gelesen. 
+
+\subsection{Binärdarstellung}
+
+Die maximale Anzahl der Binärstellen bei einem int sind 32 Stellen (32 Bit), bei long sind es 64 Stellen (64 Bit). Die Zahl wird von hinten aufgefüllt und falls vorne noch Zeichen frei stehen, werden diese mit einer 0 aufgefüllt. Nehmen wir beispielsweise die Zahl $15_{10}$, deren Binärdarstellung ja $1111_{2}$ ist, so wird diese Zahl im Speicher als 00\dots0001111. Eine weitere Besonderheit, die vorher bereits schon einmal angesprochen wurde, ist die Darstellung der negativen Zahlen. Möchten wir eine negative Zahl schreiben, beispielsweise $-15_{10}$, so wird diese Zahl als 100\dots0001111 gespeichert. Es gibt jedoch ein besseres Verfahren um negative Zahlen zu speichern und zwar das 2er Komplement.
+
+\section{Das 2er Komplement}
+
+\subsection{Von der Dezimalzahl zum 2er Komplement}
+
+Java benutzt die 2er Komplement Codierung, um negative Zahlen zu speichern. Dies ist sinnvoll, da kein Platz für $+$ und $-$ verschwendet werden muss. Zuerst wird das Vorzeichen abgetrennt und die Zahl im Dualsystem dargestellt, so wie wir das bisher gemacht haben. Im Anschluss wird das Komplement gebildet. Wir beenden das Ganze, indem wir noch 1 hinzuaddieren. Anschaulicher wird dies, wenn wir uns folgendes Beispiel angucken.
+
+\begin{eqnarray} \label{2er Komplement bilden}
+-89_{10} & \Rightarrow & 0101\ 1001 \\
+& \Rightarrow & 1010\ 0110 \quad\text{(Komplement bilden)}\\
+& \Rightarrow & 1010\ 0111 \quad\text{(1 hinzu addieren)}
+\end{eqnarray}
+
+Zu beachten ist, dass das Vorzeichen am Anfang erst einmal ignoriert wird. Dann wird einfach jedes Zeichen umgedreht (also das Komplement gebildet) und wie bereits beschrieben wird 1 hinzuaddiert. Außerdem gilt es zu beachten, dass der Wertebereicht für ein 8-Bit 2er Komplement von $-128$ bis $127$ geht. Angenommen man addiert $127 + 1$, dann springt der Wert zu $-128$. Dies ist eine Form des ungewollten Überlaufs.
+
+\subsection{Vom 2er Komplement zur Dezimalzahl}
+
+Die 2er-Komplementdarstellung eignet sich erstklassig, um schnell sagen zu können, ob eine Zahl positiv, oder negativ ist. Ein Blick auf das erste Bit gibt uns darüber eine Auskunft, wie wir die Zahl lesen müssen. Ist es eine $0$, so können wir die Zahl nach unserem bereits bekannten Schema einfach in eine Dezimalzahl umwandeln. Ist es eine $1$, die Zahl also negativ, so gilt es diese wie folgt umzuwandeln.  
+
+\begin{eqnarray}
+1010\ 0111_{2} & \Rightarrow & \ 0101\ 1000 \quad\text{(Komplement bilden)}\\
+& \Rightarrow & \ 0101\ 1001 \quad\text{(1 hinzu addieren)}\\
+& \Rightarrow & -89_{10} \quad\text{(Dezimalzahl bilden und Vorzeichen anhängen)}
+\end{eqnarray}
+
+
+\section{IEEE 754}
+
+\subsection{Gleitkommazahlen}
+
+Gleitkommazahlen können sehr unterschiedlich große Zahlen darstellen. So kann man riesig große Zahlen ($1,23\cdot 10^{88}$) darstellen, aber auch winzig kleine ($1,23\cdot 10^{-88}$) und Selbiges gilt auch für den negativen Bereich. Wie man bereits an der Notation sieht, die genutzt wird um diese riesigen Zahlenbereiche abzudecken, lohnt es sich, hier die wissenschaftliche Schreibweise zu nutzen, um Zahlen darzustellen. Um im Folgenden sprachliche Barrieren zu vermeiden möchte ich an dieser Stelle auf die verschiedenen Bezeichnungen der einzelnen Teile in der wissenschaftlichen Schreibweise eingehen.
+
+$$ x = v \cdot m \cdot b^{e}$$
+
+\begin{itemize}
+\item \textbf{v} ist das Vorzeichen
+\item \textbf{m} ist die Mantisse
+\item \textbf{b} ist die Basis (bei IEEE 754 \textit{b = 2})
+\item \textbf{e} ist der Exponent
+\end{itemize}
+
+Für das Vorzeichen $v$ gilt im Folgenden, dass dieses aus einem Bit besteht und $0$ für ein positives und $1$ für ein negatives Vorzeichen steht. Man kann auch sagen, dass $ v = (-1)^{v} $ repräsentiert. Es ist aber einfacher sich einfach zu merken, dass das gesetzte Bit ($= 1$) eine negative Zahl repräsentiert
+
+Diese etwas ungewohnte Art der Darstellung soll an den folgenden beiden Beispielen deutlich werden.
+
+\begin{eqnarray}
+-543,21 & = & (-1)^{1} \cdot 5,4321 \cdot 10^2 \\
+0,00543 & = & 1 \cdot 5,4321 \cdot 10^{-3}
+\end{eqnarray}
+
+
+Wir müssen beachten, dass Gleitkommazahlen oft nur einen angenäherten Wert annehmen können, da reele Zahlen beispielsweise nicht in den Speicher passen (mit ihren unendlich vielen Nachkommastellen), aber auch Rundungsfehler das Arbeiten mit Gleitkommazahlen erschweren. Wie die Gleitkommazahlen in Computern dargestellt werden und was das alles mit diesem \textit{IEEE 754} zu tun hat, wird in den folgenden Abschnitten erklärt.
+
+\subsection{Was ist das und warum wird es genutzt}
+
+Die IEEE 754 Norm wird genutzt um Gleitkommazahlen in Computern darzustellen und diese umzurechnen, aber auch, wie man mathematische Operationen mit diesen Zahlen durchführt und wie diese Zahlen zu runden sind. Es wird generell zwischen Datenformaten mit 32 Bit (\textit{single precision}) und 64 Bit (\textit{double precision}) Speicherbedarf unterschieden. Java nutzt \texttt{Float} für die Single-Precision Darstellung, und \texttt{Double} für die Double Precision. 
+
+Die Single Precision Zahl benötigt den folgenden Speicherplatz für die einzelnen Teile, die zur Darstellung einer Gleitkommazahl notwendig sind
+
+\begin{itemize}
+\item Vorzeichen: 1 Bit
+\item Exponent: 8 Bit
+\item Mantisse: 23 Bit
+\end{itemize}
+
+Die Anordnung der verschiedenen Bits soll durch folgende Abbildung besser erklärt werden.
+
+\begin{figure}[htbp!] 
+\centering    
+\includegraphics[width=1.0\textwidth]{ieee}
+\label{fig:ieee}
+\end{figure}
+
+Die Double Precision Zahl benötigt hingegen folgenden Speicherplatz
+
+\begin{itemize}
+\item Vorzeichen: 1 Bit
+\item Exponent: 11 Bit
+\item Mantisse: 52 Bit
+\end{itemize}
+
+Die Mantisse wird bei der IEEE Kodierung im Bereich $ 1 \le m \le 2 $ dargestellt. Da dann links immer eine 1 steht, vor dem Komma, müssen wir dieses nicht extra speichern und erhalten somit 1 Bit mehr Platz für die Mantisse.
+
+Außerdem können noch einige Sonderfälle auftreten, die durch spezielle Bitmuster kodiert werden. Hierzu werden zwei besondere Exponentwerte benutzt, der Maximalwert ($e = 111\dots11 = 2^{r} - 1$) und die Null ($e = 000\dots00$). Mit dem maximalen Exponentwerten werden die Sonderfälle \textit{NaN} (Englisch für \textit{Not a Number}) und $\infty$ kodiert. Mit der Null im Exponenten wird die Gleitkommazahl 0 dargestellt.
+
+Jetzt, wo wir grob wissen, was es mit der IEEE 754 Norm auf sich hat, möchten wir uns einmal angucken, wie wir eine Dezimalzahl in eine solche IEEE 754 normierte single precision Zahl umwandeln.
+
+
+\subsection{Dezimalzahl in IEEE 754 umrechnen}
+
+Wir möchten das Umrechnen von einer Gleitkommazahl in eine IEEE 754 normierte Binärzahl am Beispiel von $-10,125$ erklären.
+
+\subsubsection{Vorzeichen}
+
+Da unsere Beispielzahl $-10,125$ negativ ist, setzen wir das Vorzeichenbit auf 1 und entfernen das Vorzeichen von der Zahl, sodass wir von nun an mit $10,125$ weiterrechnen werden.
+
+\subsubsection{In Binärzahl umwandeln}
+
+Nun wandeln wir $10,125$ in eine Binärzahl um.
+
+\begin{eqnarray}
+10,125_{10} & = & 1 \cdot 8 + 0 \cdot 4 + 1 \cdot 2 + 0 \cdot 1 + 0 \cdot 0.5 + 0 \cdot 0.25 + 1 \cdot 0.125 \\
+& = & 2^{3} + 2^{1} + 2^{-3} \\
+& = & 1010,001_{2}
+\end{eqnarray}
+
+\subsubsection{Mantisse bilden, Exponent bestimmen}
+
+Nun, da wir die Binärzahl $1010,001_{2}$ haben, bilden wir daraus die Mantisse und können danach den Exponenten bestimmen. Zuerst verschieben wir das Komma so, dass nur noch eine 1 vor dem Komma steht.
+
+$$1010,001 = 1,010001 \cdot 2^{3}$$
+
+Die Mantisse erhalten wir, wenn wir nun die vor dem Komma stehende 1 abtrennen und die hinteren Bits mit Nullen auffüllen (die Mantisse besteht ja bei der single precision aus 23 Bits). Somit erhalten wir folgende Mantisse:
+
+$$0100010000\ 00000000000\ 000$$
+
+Jetzt fehlt uns nur noch der Exponent. Den erhalten wir, wenn wir den Term von oben betrachten, in dem wir das Komma verschoben haben.
+
+$$ 1,010001 \cdot 2^{3}$$
+
+Hier erkennen wir, dass der Exponent $3$ ist. Nun müssen wir 127 mit diesem Exponenten addieren und die Summe nur noch in eine Binärzahl umwandeln:
+
+$$127 + 3 = 130_{10} = 1000\ 0010_{2}$$
+
+Nun haben wir die drei notwendigen Bestandteile
+
+\begin{eqnarray}
+Vorzeichen & & 1 \\
+Exponent & & 1000\ 0010\\
+Mantisse & & 0100010000\ 00000000000\ 000
+\end{eqnarray}
+
+aus denen wir nun die der IEEE 754 Norm entsprechende 32 Bit Gleitkommazahl zusammen fassen können
+
+$$\underbrace{1}_{VZ}\underbrace{10000010}_{Exponent}\underbrace{010001000000000000000000}_{Mantisse}$$
+
+\subsection{IEEE 754 Zahl in Dezimalzahl umwandeln}
+
+Auch hier ist es einfacher, die Umformung anhand eines Beispiels zu zeigen. Nehmen wir die als IEEE 754 normierte Binärzahl $1\ 011111110\ 01101100$, bei der wir die letzten Füllbits (also Nullen) weglassen.
+
+An dem Vorzeichenbit $1$ erkennen wir bereits, dass es sich um eine negative Zahl handelt. Nun gucken wir, wie groß der Exponent ist und in welche Richtung sich das Komma demzufolge verschieben wird. Dazu berechnen wir zuerst die Dezimaldarstellung.
+
+$$01111\ 1110_{2} = 126_{10}$$
+
+Und ziehen hiervon 127 ab.
+
+$$126 - 127 = -1$$
+
+Das Komma verschiebt sich also nach links, die Zahl ist somit kleiner als 1. Wir nehmen nun wieder die Mantisse, fügen vorne eine 1 und folgend das Komma an und verschieben über den gerade berechneten Exponenten das Komma. Danach berechnen wir aus dieser Dualzahl die Dezimalzahl
+
+\begin{eqnarray}
+1,\underbrace{01101100}_{Mantisse} \cdot 2^{\overbrace{-1}^{Exponent}} & = & 0,101101100\\
+& = & 0 \cdot 2^{0} + 1 \cdot 2^{-1} + 0 \cdot 2^{-2} + 1 \cdot 2^{-3}\\
+& & + 1 \cdot 2^{-4} + 0 \cdot 2^{-5} + 1 \cdot 2^{-6} + 1 \cdot 2^{-7}\\
+& = & 2^{-1} + 2^{-3} + 2^{-4} + 2^{-6} + 2^{-7}\\
+& = & 0.7109375_{10}
+\end{eqnarray}
+
+Wenn wir nun noch das Vorzeichen beachten, welches ja eine negative Zahl forderte, erhalten wir die Dezimalzahl
+
+$$- 0.7109375$$
+
+\subsection{Nachkommastellen von Dualzahlen berechnen}
+
+Es gibt eine einfache Möglichkeit die Nachkommastellen von Dualzahlen zu berechnen. Auch an dieser Stelle ist ein Beispiel die beste Möglichkeit, das Verfahren zu verstehen. Wir wollen $0.625$ als Dualzahl darstellen. Dies geht wie folgt:
+
+\begin{eqnarray}
+0,625 \cdot 2 = 1,25 & | & \to 1\\
+0,25 \cdot 2 = 0,5 & | & \to 0\\
+0,5 \cdot 2 = 1 & | & \to 1\\
+& \Rightarrow & 0,101_{2}
+\end{eqnarray}
+
+Dies ist ein relativ einfaches Beispiel. Gucken wir uns nun an, wie wir die Zahl $0,4$ (näherungsweise berechnen können)
+
+\begin{eqnarray}
+0,4 \cdot 2 = 0,8 & | & \to 0\\
+0,8 \cdot 2 = 1,6 & | & \to 1\\
+0,6 \cdot 2 = 1,2 & | & \to 1\\
+0,2 \cdot 2 = 0,4 & | & \to 0
+\end{eqnarray}
+
+Wie man erkennt, wiederholt sich diese Folge, da man wieder bei $0,4$ auskommt. Es entsteht also die Binärzahl
+
+$$0,0110\ 0110 \dots$$
+
+\section{Overflow}
+
+Wenn man in Java programmiert, muss man bei einigen Datentypen aufpassen, dass man keinen Overflow, oder aber Underflow erreicht. Wir haben ja bereits die Wertebereiche der verschiedenen Datentypen angeguckt. Dies ist vor allem gefährlich, da Java keine Exception schmeißt, sollte man den Wertebereich übertreten. Wählt man den größten positiven Wert (011111\dots11$_{2}$) einer Zahl und addiert eine 1 hinzu, wird dieser zu 100000\dots und somit zur kleinsten negativen Zahl. Nehmen wir der Einfachheit halber den Byte Datentyp, der von -128 bis 127 reicht.
+
+\begin{lstlisting}
+byte b = 128; // Fehler, weil 127 der größte Wert ist
+byte b = 127; //richtig
+
+// Wenn man 1 addiert, erreicht man einen overflow
+byte b = b + 1; // b = -128;
+
+byte b = -128;
+byte b = b - 3; // b = 125
+\end{lstlisting}
+
+Wie man sieht, bekommt man Werte, die man eventuell nicht erwartet hat. Man sollte deswegen in seine Programme Kontrollmechanismen einbauen, die die Operationen im vorhinein prüfen, sollte man ein solches Verhalten nicht wünschen.

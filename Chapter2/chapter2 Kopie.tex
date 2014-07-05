@@ -1,0 +1,118 @@
+%*****************************************************************************************
+%*********************************** Second Chapter **************************************
+%*****************************************************************************************
+
+\chapter{Programmieren mit Java}
+
+\ifpdf
+    \graphicspath{{Chapter2/Figs/Raster/}{Chapter2/Figs/PDF/}{Chapter2/Figs/}}
+\else
+    \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
+\fi
+
+
+\section{Syntax}
+
+Java ist eine Hochsprache. Das heißt, dass die Sprache abstrakt ist und als solche nicht direkt von der Maschine gelesen werden kann. Hierzu ist ein sog. Compiler nötig, der aus der Hochsprache ausführbare Programme erstellt. Wenn man ein Javaprogramm schreiben will, kommt der Quellcode, also die Programmanweisungen in eine Quelldatei, welche mit .java endet. Diese wird dann vom javac Compiler in eine .class Datei umgewandelt. Diese Datei kann dann im Anschluss von dem Java Interpreter, der Java Virtual Machine gelesen und ausgeführt werden.
+Programme bestehen aus Symbolen, die alle eine eigene Bedeutung, oder Funktion haben
+\begin{itemize}
+\item Schlüsselwörter: public, class, static, double
+\item Bezeichner: gewicht, BodyMassIndex usw.
+\item Literale: 1.82, 182736292L, "Hallo Welt"
+\item Trennsymole: {}, [], =, *, +, -, / usw.
+\end{itemize}
+
+Möchte man eine neue Klasse eröffnen, so kann man dies mit der folgenden Syntax erreichen.
+
+\begin{verbatim}
+public class Bezeichner {
+	
+}
+\end{verbatim}
+
+Wichtig ist hierbei, dass der Klassenname groß geschrieben wird. Außerdem gibt es Regeln, aus welchen Zeichen ein Bezeichner bestehen darf. Diese sind im folgenden aufgelistet:
+\begin{itemize}
+\item 16 Bit Unicode Buchstaben
+\item a-z, ß, (kleine Umlaute)
+\item 0-9 (Jedoch dürfen diese nicht als erstes Zeichen eines Bezeichner gewählt werden)
+\item Unterstriche und Dollarzeichen
+\end{itemize}
+
+Sollte ein Bezeichner aus mehreren Teilwörtern bestehen, dann soll das neue Wort mit einem Großbuchstaben beginnen. Diese Schreibweise wird als Camel-Case bezeichnet und der Bezeichner "bruttoSozialProdukt" soll hier als Beispiel dienen.
+An dem obigen Bezeichner erkennt man auch, dass Bezeichner nicht aus Abkürzungen bestehen sollen, sondern klar differenzierbare Namen. Variablennamen beginnen üblicherweise mit einem kleinen Buchstaben, wohingegen Klassennamen immer mit einem großen Buchstaben beginnen. Es sei darauf hingewiesen, dass der Klassenname dem Dateinamen entsprechen muss (zusätzlich wird noch ein .java angehängt).
+
+\section{Variablen}
+
+Es gibt zwei Möglichkeiten eine Variable zu benutzen. Wenn man eine Variable initialisieren möchte, d.h. ihr einen Wert zuordnen möchte, geschieht dies so:
+
+\begin{verbatim}
+Typ Bezeichner = Ausdruck;
+\end{verbatim}
+
+Hier sei zu beachten, dass der Typ durch einen Datentyp ersetzt wird. Datentypen werden ein wenig später behandelt. Zumal ist zu beachten, dass hinter den Ausdruck ein ; (Semikolon) steht, welches den Ausdruck abschließt. Möchte man eine Variable erstellen, ihr aber noch keinen Wert zuordnen, so ist das wie folgt möglich:
+
+\begin{verbatim}
+Typ Bezeichner;
+\end{verbatim}
+
+Auch eine Verschachtlung von Variablen, welche später dann initialisiert werden ist möglich, also
+
+\begin{verbatim}
+Typ Bezeichner1, Bezeichner2, Bezeichner3;
+\end{verbatim}
+
+Zu beachten ist hier, dass alle Variablen jetzt den Datentyp Typ haben. Es sei an diesem Punkt nocheinmal erwähnt, dass Variablennamen immer mit einem kleinen Buchstaben beginnen und der Name möglichst aussagekräftig sein soll, sodass man beim späteren lesen des Quellcodes leicht versteht, was das Programm macht.
+
+\section{Schleifen}
+\subsection{while-Schleife}
+\subsubsection{Beispiel Größter gemeinsamer Teiler}
+
+Gegeben: $a, b > 0$\\
+Gesucht größter gemeinsamer Teiler von a und b
+
+\begin{verbatim}
+public class GroessteGemeinsameTeiler {
+	public static in groessteGemeinsamenTeilerCalc(int a, int b) {
+		int groessteGemeinsame Teiler = 0;
+
+		while ( a != b ) {
+
+		if ( a > b ) {
+			a = a - b;
+		} else {
+			b = b - a;
+		}
+		}
+
+		groessteGemeinsameTeiler = a; 
+
+		return groessteGemeinsameTeiler;
+	}
+}
+\end{verbatim}
+
+Das Programm muss nun gestest werden. Dies kann man über Beispieleingaben machen, die man sich ausdenkt an das Programm übergibt und manuell überprüft. Das Ziel hierbei ist es Fehler zu finden.
+
+Ein Programm (Algorithmus) heißt {\em korrekt} (bezüglich eines Problems), wenn
+\begin{itemize}
+\item Für jede im Problem definierte Eingabe berechnet das Programm eine korrekte Ausgabe
+\item Für jede im Problem definierte Eingaben, hält das Programm nach endlich vielen Schritten an (Terminierung)
+\end{itemize}
+Korrektheit muss bewiesen werden, also das Testen reicht nicht aus um für alle Fälle eine Korrektheit gewährleisten zu können.
+
+\subsection{for-Schleife}
+for-Schleifen werden üblicherweise für Zähl- oder Laufvariablen verwendet.
+Syntax:
+
+$$for ( \underbrace{VariablenDeklaration}_{\substack{nur\ ein\ Datentyp\ erlaubt. \\ Mehrere\ Variablen\ durch\\ Komma\ trennen}};\ \underbrace{Boolscher Ausdruck}_{\substack{Weglassen\ bedeutet\ true}};\ \underbrace{Anweisung}_{\substack{keine\ Kontrollanweisungen,\\ mehrere\ Anweisungen\\ durch\ Komma\ trennen}}) {
+}$$
+
+
+\subsubsection{Beispiel: Primzahlen finden}
+
+Gegeben: $zahl > 0$ \\
+Gesucht: Ist zahl eine Primzahl?
+
+Falls z keine Primzahl ist, dann hat sie mindestens 2 Primfaktoren $p_{1}$ und $p_{2}$.
+im schlimmsten Fall $p_{1}$ 
+

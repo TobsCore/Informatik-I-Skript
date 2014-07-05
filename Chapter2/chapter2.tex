@@ -1,0 +1,444 @@
+%*****************************************************************************************
+%*********************************** Second Chapter **************************************
+%*****************************************************************************************
+
+\chapter{Java Konventionen}
+
+\ifpdf
+    \graphicspath{{Chapter2/Figs/Raster/}{Chapter2/Figs/PDF/}{Chapter2/Figs/}}
+\else
+    \graphicspath{{Chapter2/Figs/Vector/}{Chapter2/Figs/}}
+\fi
+
+Java ist eine Hochsprache. Das heißt, dass die Sprache abstrakt ist und als solche nicht direkt von der Maschine gelesen werden kann. Hierzu ist ein sog. Compiler nötig, der aus der Hochsprache ausführbare Programme erstellt. Wenn man ein Javaprogramm schreiben will, kommt der Quellcode, also die Programmanweisungen in eine Quelldatei, welche mit .java endet. Diese wird dann vom javac Compiler in eine .class Datei umgewandelt. Diese Datei kann dann im Anschluss von dem Java Interpreter, der Java Virtual Machine gelesen und ausgeführt werden.
+Programme bestehen aus Symbolen, die alle eine eigene Bedeutung, oder Funktion haben
+\begin{itemize}
+\item Schlüsselwörter: public, class, static, double
+\item Bezeichner: gewicht, BodyMassIndex usw.
+\item Literale: 1.82, 182736292L, "Hallo Welt"
+\item Trennsymole: {}, [], =, *, +, -, / usw.
+
+Um den Code auch für Menschen gut lesbar zu machen, ist es nötig, einheitlichen Code zu schreiben, also den Programmcode immer nach dem selben Schema zu schreiben und zu strukturieren. Es gilt somit, semantisch und syntaktisch korrekten Code zu schreiben. Hier ist der in der Vorlesung festgelegte Standard zusammengefasst.
+\end{itemize}
+
+\section{Syntax}
+\subsection{Aussagekräftige Namen verwenden}
+
+\paragraph{Regel:} Verwende für Bezeichner immer aussagekräftige und selbsterklärende Namen.
+\paragraph{Regel:} Verwende keine Abkürzungen in Bezeichner – schreiben diese Namen immer aus.
+\paragraph{Begründung:} Quelltexte werden dadurch für alle lesbarer und verständlicher.
+
+\paragraph{Beispiel}
+Statt \texttt{KFZ, BA, HS, DB} \ besser\  \texttt{Kraftfahrzeug, BundesagenturFuerArbeit, HochschuleKarlsruhe, DeutscheBahn} schreiben.
+
+\subsection{Nur eine Sprache verwenden}
+
+\paragraph{Regel:} Vermische keine verschiedenen Sprachen (Deutsch, Englisch, …) in einer Klasse
+\paragraph{Begründung:} Quelltexte werden dadurch für alle lesbarer und verständlicher.
+
+\subsection{Nur alphanumerische Zeichen verwenden}
+
+\paragraph{Regel:} Vermische keine verschiedenen Sprachen (Deutsch, Englisch, …) in einer Klasse
+\paragraph{Begründung:} Quelltexte werden dadurch für alle lesbarer und verständlicher.
+
+\paragraph{Beispiel}
+\texttt{Person, zugFahren, ueberpruefen, MAXIMALE\textunderscore\text{ANZAHL}}
+
+\subsection{Verwende Upper Case Camel Style}
+
+\paragraph{Regel:} Bei Bezeichner, die aus mehreren Teilwörtern bestehen, wird der erste Buchstabe jedes Teilworts (ab dem zweiten Teilwort) groß geschrieben, wenn die entsprechenden Wörter normal auseinander geschrieben würden.
+\paragraph{Begründung:} Damit lange Bezeichner lesbarer sind.
+
+\paragraph{Beispiel}
+\texttt{zugFahren, Donaudampfschifffahrt, HochschuleKarlsruhe}
+
+\section{Variablen}
+
+\subsection{Anfangsbuchstabe kleinschreiben}
+
+\paragraph{Regel:} Schreibe Variablen klein (Ausnahme sind Konstanten). Besteht eine Variable aus mehren Teilwörtern, so wird bei jedem folgenden Teilwort der erste Buchstabe groß geschrieben.
+\paragraph{Begründung:} Ein Bezeichner ist dadurch im Quelltext sofort als Variable erkennbar.
+
+\paragraph{Beispiel}
+\texttt{manfredMueller, anzahlPersonen, quersumme}
+
+\subsection{Konstanten mit Grossbuchstaben schreiben}
+
+\paragraph{Regel:} Konstanten (static final) werden immer mit Grossbuchstaben bezeichnet und Teilwörter mit dem Unterstrich \textunderscore abgetrennt.
+\paragraph{Begründung:} Ein Bezeichner ist dadurch im Quelltext sofort als Konstante erkennbar.
+
+\subsection{Zählvariablen}
+
+\paragraph{Regel:} Verwende die Buchstaben \texttt{i, j, k, l} für rein technische ganzzahlige Schleifenvariablen.
+\paragraph{Begründung:} Aus historischen Gründen.
+
+\begin{lstlisting}
+for (int i = 0; i < personen.length; i++) {
+   ... 
+} 
+\end{lstlisting}
+
+Für die Aufzählung aller Elemente eines Feldes oder einer Datenstruktur des Java Collection Frameworks, sollte aber möglichst die ab JDK 5.0 zusätzliche for-Schleife verwendet werden. Die technischen Schleifenvariablen werden dann ganz vermieden:
+
+\begin{lstlisting}
+for (Person person : personen) {
+  ...
+}
+\end{lstlisting}
+
+\subsection{this Objektattributen voranstellen}
+
+\paragraph{Regel:} Um besser zwischen Objektattribute und lokalen Variablen zu unterscheiden, sollten Objektattribute mit this referenziert werden.
+\paragraph{Begründung:} Die Quelltexte werden lesbarer und Fehler werden vermieden.
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+this.name = name; // wobei name ein Parameter ist
+\end{lstlisting}
+
+
+\subsection{Ungarische Notation vermeiden}
+
+\paragraph{Regel:} Verwende keine Ungarische Notation.
+\paragraph{Begründung:} Damit Quelltexte lesbarer und wartbarer werden.
+
+Bei der Ungarischen Notation werden zwei Präfixe dem eigentlichen Bezeichner vorangestellt: Der erste für den Verwendungszweck des Bezeichners, der zweite für den Typ. Zum Beispiel p für Pointer, i für Integer: piAnzahl ist ein Zeiger auf einen Integerwert.
+
+
+\section{Methoden}
+
+\subsection{Verb verwenden}
+
+\paragraph{Regel:} Verwende mindestens ein Verb in Präsensform für eine Methode. Das Verb soll möglichst genau beschreiben, was die Methode macht.
+\paragraph{Begründung:} Damit Quelltexte verständlicher werden.
+
+\paragraph{Beispiel}
+\texttt{personSuchen(), loeschen(), produktVerkaufen()}
+
+\subsection{Getter/Setter}
+
+\paragraph{Regel:} Verwende als Verb das englische Präfix \texttt{get} mit einem nachfolgenden Substantiv, wenn eine Methode (ohne Parameter) einen Wert, der durch das Substantiv beschrieben ist, zurückgibt. Bei getter-Methoden mit booleschen Rückgabewert, wird statt get meist is verwendet.
+\paragraph{Regel:} Verwende als Verb das englische Präfix \texttt{set} mit einem nachfolgenden Substantiv, wenn eine Methode ohne Rückgabewert und mit einem Parameter einen Zustandswert (insbesondere ein Attribut) eines Objekts ändert.
+\paragraph{Begründung:} Zur Wahrung des Geheimnisprinzips bei der Programmierung.
+
+\paragraph{Beispiel}
+\texttt{String getVorname(), void setVorname(String vorname),\\boolean isSchaltjahr(), void setSchaltjahr(boolean schaltjahr)}
+
+\section{Quelltextformatierung}
+
+\subsection{Programmierstile}
+
+\paragraph{Regel:} Mische in einer Klasse nie verschiedene Programmierstile.
+\paragraph{Regel:} Bei bestehenden Quelltexten gilt insbesondere, dass der bestehende Programmierstil übernommen oder überall in der Klasse geändert wird.
+\paragraph{Begründung:} Quelltexte werden dadurch für alle lesbarer.
+
+\subsection{Allgemeine Regel}
+
+\paragraph{Regel:} Schreibe nie Zeilen mit mehr als 80 Zeichen.
+\paragraph{Regel:} Stelle den Editor so ein, dass er diese Grenze als vertikale Linie klar darstellt.
+\paragraph{Begründung:} Quelltexte werden dadurch lesbarer.
+
+Die 80 Zeichengrenze hat historischen Gründe: frühe Terminals hatten max. 80 Zeichen pro Zeile. Heutzutage ist die Grenze je nach Bildschirmauflösung und Font etwas größer. Grundsätzlich sollte man aber nicht von einer zu hohen Anzahl Zeichen pro Zeile ausgehen. Überlange Zeilen sind für Menschen schlecht lesbar, da nur eine begrenzte Anzahl von „Wörtern“ (ca. 5-7) mühelos erfasst werden können ohne dass man das Gefühl bekommt angestrengt zu lesen. Des Weiteren ist das horizontale Scrollen bei überlangen Zeilen im Fenster im Gegensatz zum vertikalen mühsam, da bei Sprung auf die nächste Zeile, insgesamt der Quelltext sich sprunghaft nach links verschiebt (zu starker Kontextwechsel).
+
+\subsection{Einrückungen}
+
+\paragraph{Regel:} Verwende bei Kontrollstrukturen wie if, else, while, … immer geschweifte Klammer für die Anweisungen (auch bei Einzelanweisungen)
+\paragraph{Regel:} Rücke jede Anweisung um 2 bis 4 Zeichen nach rechts ein (immer konsistent die gleiche Anzahl von Zeichen und nicht mal 2, mal 3 und dann mal wieder 4 Zeichen)
+\paragraph{Regel:} Stelle den Editor so ein, dass bei Drücken der Tabulatortaste, immer Leerzeichen eingefügt werden.
+\paragraph{Begründung:} Bessere Lesbarkeit von Programmen und vermeiden von Programmierfehlern.
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+if (student.hatZulassung () && student.hatZugesagt()) {
+  student.immatrikulieren();
+}
+\end{lstlisting}
+
+Falls die Klammern bei einzelnen Anweisungen weggelassen werden, kann bei nachträglichem Hinzufügen von zusätzlichen Anweisungen oder anderen Änderungen vergessen werden, die Klammern zu setzten, da durch die Einrückung suggeriert wird, dass die Anweisungen zusammengehören.
+
+Werden Tabulatore statt Leerzeichen im Quelltext eingefügt, dann geht aufgrund anderer Tabulatoreinstellungen bei einem anderen Editor die Struktur meist die Struktur verloren.
+
+Wenn bei if und else Klammern weggelassen werden, dann gehört das else zum "nächsten" vorangehenden if. Dies kann zu ungewollten Fehlern führen. Im folgenden Beispiel scheint das else zum ersten if zu gehören, weil es nicht eingerückt ist. Tatsächlich gehört es zum zweiten if!!!
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+if (  ) 
+   if (   )
+     ....
+else 
+  ....
+\end{lstlisting}
+
+Wenn immer Klammern verwendet werden, ist es für jeden Programmierer eindeutig, zu welchem if ein else gehört:
+
+\begin{lstlisting}
+if (  ) {
+   if (   ) {
+     ....
+   }
+} else { 
+  ....
+}
+\end{lstlisting}
+
+\subsection{else-if}
+
+Ausnahme obiger Regel: Folgt auf \texttt{else} direkt wieder ein \texttt{if}, so braucht das if nicht in ein Paar geschweifter Klammern eingeschlossen zu werden.
+\paragraph{Begründung:} Damit Quelltexte lesbarer werden.
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+if (a < 7) {
+   a = a + 1;
+} else if (a > 10) {
+   a = a - 1;
+} else if (a == 1) {
+   ...
+}
+\end{lstlisting}
+
+Dies vermeidet, dass bei einem kaskadierenden if-else if-else if - … - else durch fortgesetztes Einrücken die Zeilen immer weiter nach rechts wandern und so der Quelltext unnötig tief verschachtelt ist. Man kann sich diese Regel auch so verstellen, dass damit im Gegensatz zu anderen Programmiersprachen ein in Java nicht vorhandenes Schlüsselwort „elsif“ simuliert wird.
+
+\subsection{Klammerungsstil}
+
+\paragraph{Regel:} Schreibe entweder \par\textit{a)} die geschweifte öffnende Klammer auf die nächste Zeile oder \par\textit{b)} hinter der Kontrollanweisung ohne weitere Anweisungen hinter der öffnenden Klammer. Schreibe die zugehörige schließende Klammer immer auf eine neue Zeile ohne weitere Anweisungen oder Bezeichner davor oder dahinter (Ausnahme else).
+\paragraph{Begründung:} Damit Quelltexte kürzer und lesbarer werden.
+
+\paragraph{Beispiel zu a)} \hspace{0pt}\\
+\begin{lstlisting}
+if (a > 7)
+{
+   a = a + 1;
+}
+\end{lstlisting}
+
+\paragraph{Beispiel zu b)} \hspace{0pt}\\
+\begin{lstlisting}
+if (a > 7) {
+   a = a + 1;
+} else {
+   a = a - 1;
+}
+\end{lstlisting}
+
+\subsection{Eine Anweisung pro Zeile}
+
+\paragraph{Regel:} Schreibe jede einzelne Anweisung in eine separate Zeile.
+\paragraph{Begründung:} Damit Quelltexte lesbarer werden.
+
+\subsection{Continue und Break vermeiden}
+
+\paragraph{Regel:} Vermeide die Schlüsselwörter continue und break, um Schleifen fortzuführen oder eine Kontrollstruktur abzubrechen. Ausnahme: break bei case-Anweisungen.
+\paragraph{Begründung:} Durch break und continue in Kontrollanweisungen wird der sequentielle Kontrollfluss unterbrochen. Dadurch ist dieser für Menschen nicht so leicht zu verstehen.
+
+\subsection{Verschachtelungstiefe von Kontrollanweisungen}
+
+\paragraph{Regel:} Vermeide eine zu tiefe Verschachtlung von Kontrollanweisungen (ca. drei Kontrollanweisungen).
+\paragraph{Begründung:} Damit Quelltexte lesbarer werden.
+
+\subsection{Leerzeichen bei Operatoren}
+
+\paragraph{Regel:} Setzte vor und nach jedem binären Operator ein Leerzeichen.
+\paragraph{Begründung:} Damit Ausdrücke bei langen Bezeichnern lesbarer werden.
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+a = 1 + 7 * (5 / a);
+flaecheninhalt = kreisradius * kreisradius * 3.14159265;
+\end{lstlisting}
+
+\subsection{Umbrechen von überlangen Ausdrücken}
+
+\paragraph{Regel:} Breche überlange Zeilen wie folgt um:
+\begin{itemize}
+\item bei arithmetischen Operatoren vor einem Operator mit der schwächsten Bindung (Operatoren so auswählen, dass nicht zu viele Zeilenumbrüche entstehen)
+\item bei Methodenaufruf oder Parameterdeklaration nach einem Komma
+rücke den umgebrochenen Teil soweit nach rechts ein, dass er sich unterhalb des zugehörigen linken Teilausdrucks des Operators befindet mit zwei bis vier zusätzlichen Leerzeichen
+\end{itemize}
+\paragraph{Begründung:} Damit Quelltexte lesbarer werden.
+
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+                           | <-- soll das Zeilenende markieren
+a * a * a + 3 * a * a * b + 3 * a * b * b + b * b *b
+\end{lstlisting}
+
+Nicht bei *, sondern bei + umbrechen (+ bindet schwächer als *)
+
+\begin{lstlisting}
+a * a * a + 3 * a * a * b
+     + 3 * a * b * b + b * b *b
+\end{lstlisting}
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+                                   |
+x1 * 3 + (a + b + 6) * ((x2 + 8) + x3 / 11)
+\end{lstlisting}
+
+Bei + umbrechen im zweiten Faktor, wäre schlecht, da durch Einrücken, dann x3 / 11 über die Grenze hinausragt. Deswegen besser bei * umbrechen.
+
+\begin{lstlisting}
+x1 * 3 + (a + b + 6)
+            * ((x2 + 8) + x3 / 11)
+\end{lstlisting}
+
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+public Address(String strasse,
+                 String hausnummer,
+                 int postleitzahl,
+                 String ortsname) {
+  ...
+}
+\end{lstlisting}
+
+\subsection{Vergleich mit boolschen Werten}
+
+\paragraph{Regel:} Vergleiche Boolesche Werte in einem Booleschen Ausdruck nicht mit == auf true oder false. Verwende stattdessen bei true, den Booleschen Ausdruck selbst und bei false dessen Negation (bei != entsprechend umgekehrt)
+\paragraph{Begründung:} Quelltexte werden leserlicher
+
+
+\paragraph{Beispiel}
+Anstatt folgenden boolschen Ausdruck\par
+\begin{lstlisting}
+schaltjahr == true && volljaehrig == false
+\end{lstlisting}
+
+verwende besser
+
+\begin{lstlisting}
+schaltjahr && ! volljaehrig
+\end{lstlisting}
+
+\subsection{Operatorenreihenfolge}
+
+\paragraph{Regel:} Bei mathematischen Vergleichen wie 0 < i < j < n behalte die Reihenfolge der Operatoren und Variablen in der Implementierung bei.
+\paragraph{Begründung:} Der resultierende Ausdruck ist dann sehr nah an der mathematischen Schreibweise orientiert und leichter verständlich, da er die ursprüngliche zu implementierende Form beibehält.
+
+\paragraph{Beispiel} \hspace{0pt}\\
+\begin{lstlisting}
+if (0 < i && i < j && j < n) {
+   ...
+}
+\end{lstlisting}
+
+Oder für $i = j = 7 < n$
+
+\begin{lstlisting}
+if (i == j && j == 7 && 7 < n) {
+   ...
+}
+\end{lstlisting}
+
+\subsection{Vermeide Seiteneffekte}
+
+\paragraph{Regel:} Ein Ausdruck sollte keine Seiteneffekte haben, das heisst, ein Ausdruck sollte keine Zustandsänderungen durchführen.
+\paragraph{Regel:} Insbesondere sollten Funktionen keine Seiteneffekte haben.
+\paragraph{Begründung:} Vermeidung von Programmierfehlern und bessere Verständlichkeit von Quelltexten.
+
+\paragraph{Beispiel} Welchen Wert hat a, nachdem die letzte Anweisung ausgeführt wurde? \par
+\begin{lstlisting}
+int a = 1;
+
+a = (a = 2) + (a += a) * (a = 1 + a);
+\end{lstlisting}
+
+\subsection{Vermische Kurzschlußoperatoren nie mit "normalen" Booleschen Operatoren}
+
+\paragraph{Regel:} Vermische nie die Kurzschlußoperatoren (\&\&,||) mit den "normalen" Booleschen Operatoren (\&, \string^, |) in einem Ausdruck
+\paragraph{Begründung:} Fehlervermeidung und Wartbarkeit
+
+\paragraph{Beispiel} Welchen Wert hat folgender Ausdruck?\par
+
+\begin{lstlisting}
+false && true | true
+\end{lstlisting}
+
+\&\& bindet \textbf{schwächer} als |. Deswegen ist der Wert des Ausdrucks false und nicht true, wie es \textit{logischerweise} sein müsste.
+
+\subsection{Kurzer Methodenrumpf}
+
+\paragraph{Regel:} Verwende nur so viele Zeilen für die Implementierung einer Methode, so dass die Methode komplett auf den Bildschirm passt (ca. 20-30 Zeilen), wenn möglich auch noch die zugehörige Javadokumentation.
+\paragraph{Regel:} Verlagere bei zu langen Zeilen zusammengehörende Teile in private Methoden.
+\paragraph{Begründung:} Um die Struktur und Funktionsweise einer Methode zu verstehen, sollte der Programmierer nicht gezwungen sein, vertikal zu scrollen: zugehörige Programmteile if-else sind dann oft nicht mehr auf einen Blick zu erfassen. Mit den Refactor-Funktionen der Entwicklungsumgebung geht eine derartige nachträgliche Formatierung des Quelltextes sehr schnell.
+
+\subsection{Deklaration lokaler Variablen}
+
+\paragraph{Regel:} Deklariere alle lokalen Variablen (außer Schleifenvariablen) am Anfang der Methode gefolgt von einer Leerzeile.
+\paragraph{Regel:} Bei einer Funktion sollte insgesamt nur ein return in der Methode existieren (notwendigerweise am Ende der Methode). Setzte vor diesem return eine Leerzeile.
+\paragraph{Begründung:} Damit Methodenimplementierung verständlicher wird.
+
+\subsection{Primitive Datentypen}
+
+\paragraph{Regel:} Verwende möglichst int statt byte, short oder long
+\paragraph{Regel:} Verwende möglichst double statt float
+\paragraph{Regel:} Mische möglichst keine verschiedenen Zahlentypen in einem Ausdruck.
+\paragraph{Regel:} Verwende wissenschaftliche Notation nur bei sehr kleinen oder sehr großen Zahlen.
+
+Byte und short haben im Gegensatz zu int und long einen relativ kleinen Wertebereich. Da ein Überlauf in Java anderes als in C\# nicht durch eine Ausnahme angezeigt wird, sollte möglichst mit Datentypen höherer Genauigkeit gerechnet werden. int ist meist ausreichend vom Wertebereich und schneller als long. Es ist dabei normalerweise auch nicht langsamer als byte oder short, da die interne Prozessorregister heutzutage mindestens 32bit breit sind. Es entfällt auch das bei long lästige Schreiben von l oder L hinter jeder Zahl. Wenn ein Java-Programm innerhalb einer Java Virtual Machine abläuft benötigen alle Werte entweder 32 Bit oder 64 Bit (long, double). Bei byte und short wird intern immer mit int-Werten gerechnet.
+
+Float hat gegenüber double eigentlich nur den Vorteil halb so viel Speicher zu verbrauchen – Speicherverbrauch ist heutzutage aber kein Problem mehr. Die Berechnungen mit float sind normalerweise nicht schneller als mit double, da Mikroprozessoren intern mindestens mit der Genauigkeit von double rechnen. Teilweise kann float sogar langsamer sein, da die Konvertierung vom internen Gleitkommaformat zu float mehr Zeit kosten kann als zu double: insbesondere, falls die CPU intern immer mit double rechnet. Analog wie bei long entfällt auch das lästige Schreiben von f oder F hinter jeder Floatzahl.
+
+Verschiedene Zahlentypen in einem Ausdruck zu mischen sollte vermieden werden, da dadurch unbeabsichtigt Fehler entstehen. Zum Beispiel ist der folgende Ausdruck immer 0, auch wenn x ein double Wert ist: $5 / 9 * x$ . Ebenso kann es bei der impliziten Konvertierung von z.B. int (31 bit für positive Zahlen) nach float (23 Bit) zu Fehlern kommen - diese werden nicht vom Compiler angezeigt.
+
+Die wissenschaftliche Notation sollte nur bei sehr großen oder sehr kleinen Zahlen (ab ca. 7-8 Ziffern) angewendet werden, da diese Notation für den Menschen sonst schwerer zu verstehen ist.
+
+\section{Javadoc}
+
+\subsection{Allemein}
+
+Die durch Javadoc erstellte HTML Dokumentation dient Entwicklern dazu Klassen verwenden zu können ohne die Quelltexte lesen zu müssen oder wenn nur der Bytecode aber nicht die Quelltexte verfügbar sind. Die Javadoc-Kommentare müssen deswegen kurz und spezifisch für alle nicht private Member einer Klasse beschreiben
+
+\begin{itemize}
+\item was eine Klasse für eine Menge von Objekten beschreibt
+\item was ein Attribute bedeutet und welche Werte es annehmen kann (bzw. nicht darf)
+\item was eine Methode macht, was für ein Wert zurückgegeben wird und was die Parameter bedeuten und welche Werte sie annehmen dürfen (bzw. nicht dürfen)
+In einem Javadoc-Kommentar sollte nie beschrieben werden wie etwas implementiert ist, es sei denn es ist für die Verwendung der Klasse und deren Objekte notwendig.
+\end{itemize}
+
+Ein Javadoc-Kommentar ist ein mehrzelliger Kommentare der mit $/**$ eingeleitet und mit $*/$ beendet wird. Ob man im Javadoc-Kommentare in jeder Zeile auch noch einen zusätzlichen $*$ hinzufügt oder nicht, ist Geschmackssache. Der erste * in jeder Zeile innerhalb eines Javadoc-Kommentars wird ignoriert. Folgende Varianten sind in der resultierenden HTML-Dokumentation identisch. Man sollte sich generell für eine entscheiden. Am besten die Voreinstellung der Entwicklungsumgebung verwenden.
+
+\paragraph{Wichtig} Ein Kommentar muss so kurz wie möglich und spezifisch wie nötig sein.
+
+\subsection{Entwurfsentscheidung dokumentieren}
+
+\paragraph{Regel:} Drücke im Klassenkommentar in einem Satz beginnende mit dem Klassennamen die wesentlichen Entwurfseinscheidung (Attribute und Beziehungen) und/oder die Verantwortung (abstrakte Beschreibung des Verhaltens der Objekte) aus.
+\paragraph{Regel:} Um das Geheimnisprinzip zu waren, vermeide möglichst jeden rein Implementierungstechnischen Bezug (z.B. Nennung von Datentypen).
+\paragraph{Begründung:} Zum besseren Verständis der Klasse
+
+\paragraph{Beispiel} Nehmen wir an es existieren die Klassen Hochschule, Student, Dozent und Studiengang.\par
+
+\begin{lstlisting}
+/**
+	Eine Hochschule mit Studenten, Dozenten und Studiengängen.
+	*/
+public class Hochschule {
+
+	}
+\end{lstlisting}
+
+Der obige Kommentar drückt den Entwurf der Beziehungen von Hochschule zu anderen Klassen aus: die Klasse Hochschule hat jeweils eine 1-n Beziehung zu Student, Dozent und Studiengang.
+
+\begin{lstlisting}
+/**
+	Ein Student mit Namen, Matrikelnummer und seine
+	eingeschriebenen Studiengänge.
+	*/
+public class Student {
+	private String name;
+	private String matrikelnummer;
+	private Studiengang studiengaenge[];
+}
+\end{lstlisting}
+
+Um eine Klasse besser verstehen und verwenden zu können, muss deren Zweck mindestens grob beschrieben sein. Ansonsten muss jeder Entwickler sich aus den Detailinformationen (Methoden, Attribute) den Zweck der Klasse selbst zusammenreimen. Um die Klasse zu ändern, muss deren Zweck durch Nennung der wesentlichen Entwurfsentscheidungen klar abgegrenzt sein. Ansonsten ist die Gefahr groß, dass die Klasse so erweitert wird, dass sie die ursprünglichen Entwurfszielen nicht mehr erfüllt sind: normalerweise wird dadurch das Programm komplexer, schwerer zu verstehen und fehleranfälliger.
+
+\subsection{Beschreibe \textit{was} eine Methode macht}
+
+\paragraph{Regel:} Beschreibe immer was die Methode macht, nicht wie sie implementiert ist.
+\paragraph{Regel:} Fange den Kommentar mit dem Verb des Methodennamens in Präsensform an.
+\paragraph{Regel:} Führe alle Parameter mit dem @param-Tag auf und beschreiben sie.
+\paragraph{Regel:} Beschreibe die Bedeutung des Rückgabewerts bei @return mit einer kurzen Phrase
