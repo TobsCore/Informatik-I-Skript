@@ -10,4 +10,4 @@ Informatik I Skript
 
 ## Skript erstellen
 
-Einfach die Datei 'skriptum.tex' mit pdflatex umwandeln, um ein PDF zu bekommen. Eventuell muss dies zwei mal gemacht werden, damit das Inhaltsverzeichnis vernünftig erstellt werden kann.
+Einfach die Datei `skriptum.tex´ mit pdflatex umwandeln, um ein PDF zu bekommen. Eventuell muss dies zwei mal gemacht werden, damit das Inhaltsverzeichnis vernünftig erstellt werden kann.
